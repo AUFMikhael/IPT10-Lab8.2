@@ -8,17 +8,17 @@ use App\Outputs\TextFormat;
 
 class DisplayFactory
 {
-    public static function getInstance($format = 'text')
+    public static function getInstance($format = 'html')
     {
-        if ($format == 'text') {
-            return new TextFormat();
-        } elseif ($format == 'html') {
-            return new HTMLFormat();
-        } elseif ($format == 'pdf') {
-            return new PDFFormat();
+        switch ($format) {
+            case 'text':
+                return new TextFormat();
+            case 'html':
+                return new HTMLFormat();
+            case 'pdf':
+                return new PDFFormat();
+            default:
+                return null;
         }
-        
-        // else
-        return null;
     }
 }
