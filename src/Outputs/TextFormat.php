@@ -22,6 +22,32 @@ class TextFormat implements ProfileFormatter
         foreach ($profile->getExperience() as $job) {
             $output .= "- " . $job['job_title'] . " at " . $job['company'] . " (" . $job['start_date'] . " to " . $job['end_date'] . ")\n";
         }
+
+        // Certifications
+        $output .= "Certifications:\n";
+        foreach ($profile->getCertifications() as $certification) {
+            $output .= "- " . $certification['name'] . " (Earned on " . $certification['date_earned'] . ")\n";
+        }
+
+        // Extra-Curricular Activities
+        $output .= "Extra-Curricular Activities:\n";
+        foreach ($profile->getExtracurricularActivities() as $activity) {
+            $output .= "- " . $activity['role'] . " at " . $activity['organization'] . " (" . $activity['start_date'] . " to " . $activity['end_date'] . ")\n";
+        }
+
+        // Languages
+        $output .= "Languages:\n";
+        foreach ($profile->getLanguages() as $language) {
+            $output .= "- " . $language['language'] . " (" . $language['proficiency'] . ")\n";
+        }
+
+        // References
+        $output .= "References:\n";
+        foreach ($profile->getReferences() as $reference) {
+            $output .= "- " . $reference['name'] . " - " . $reference['position'] . " at " . $reference['company'] . "\n";
+            $output .= "  Email: " . $reference['email'] . "\n";
+            $output .= "  Phone: " . $reference['phone_number'] . "\n";
+        }
         $this->response = $output;
     }
 

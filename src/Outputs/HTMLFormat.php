@@ -22,8 +22,35 @@ class HTMLFormat implements ProfileFormatter
         foreach ($profile->getExperience() as $job) {
             $output .= "<li>" . $job['job_title'] . " at " . $job['company'] . " (" . $job['start_date'] . " to " . $job['end_date'] . ")</li>";
         }
-
         $output .= "</ul>";
+
+        $output .= "<h2>Certifications</h2><ul>";
+        foreach ($profile->getCertifications() as $certificate) {
+            $output .= "<li>" . $certificate['name'] . " (Earned on " . $certificate['date_earned'] . ")</li>";
+        }
+        $output .= "</ul>";
+
+        // Extra-Curricular Activities
+        $output .= "<h2>Extra-Curricular Activities</h2><ul>";
+        foreach ($profile->getExtracurricularActivities() as $activity) {
+            $output .= "<li>" . $activity['role'] . " at " . $activity['organization'] . " (" . $activity['start_date'] . " to " . $activity['end_date'] . ")</li>";
+        }
+        $output .= "</ul>";
+
+        // Languages
+        $output .= "<h2>Languages</h2><ul>";
+        foreach ($profile->getLanguages() as $language) {
+            $output .= "<li>" . $language['language'] . " (" . $language['proficiency'] . ")</li>";
+        }
+        $output .= "</ul>";
+
+        // References
+        $output .= "<h2>References</h2><ul>";
+        foreach ($profile->getReferences() as $reference) {
+            $output .= "<li>" . $reference['name'] . " - " . $reference['position'] . " at " . $reference['company'] . "<br>Email: " . $reference['email'] . "<br>Phone: " . $reference['phone_number'] . "</li>";
+        }
+        $output .= "</ul>";
+
         $this->response = $output;
     }
 
