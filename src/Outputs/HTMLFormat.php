@@ -10,46 +10,48 @@ class HTMLFormat implements ProfileFormatter
 
     public function setData($profile)
     {
-        $output = "<h1>Profile of " . $profile->getFullName() . "</h1>";
-        $output .= "<p>Email: " . $profile->getContactDetails()['email'] . "</p>";
-        $output .= "<p>Phone: " . $profile->getContactDetails()['phone_number'] . "</p>";
-        $output .= "<h2>Education</h2>";
-        $output .= "<p>" . $profile->getEducation()['degree'] . " at " . $profile->getEducation()['university'] . "</p>";
-        $output .= "<h2>Skills</h2>";
-        $output .= "<p>" . implode(", ", $profile->getSkills()) . "</p>";
-        $output .= "<h2>Experience</h2><ul>";
+        // Use absolute paths for CSS, JS, and images
+        $cssPath = '/assets/css/main.css';
+        $jsPath = '/assets/js/main.js';
+        $imagePath = '/assets/images/AUFfounder.jpg';
 
-        foreach ($profile->getExperience() as $job) {
-            $output .= "<li>" . $job['job_title'] . " at " . $job['company'] . " (" . $job['start_date'] . " to " . $job['end_date'] . ")</li>";
-        }
-        $output .= "</ul>";
+        // Start building the HTML output with the correct paths
+        $output = "<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1'>
+            <link rel='stylesheet' href='$cssPath'>
+            <title>Profile of " . $profile->getTitle() . "</title>
+        </head>
+        <body>";
 
-        $output .= "<h2>Certifications</h2><ul>";
-        foreach ($profile->getCertifications() as $certificate) {
-            $output .= "<li>" . $certificate['name'] . " (Earned on " . $certificate['date_earned'] . ")</li>";
-        }
-        $output .= "</ul>";
+        // Founder section with image and background
+        $output .= "<section style='background-color: lightgray; padding: 20px;'>
+            <div style='max-width: 1200px; margin: 0 auto; text-align: center;'>
+                <img src='$imagePath' alt='Founder' style='max-width: 100%; height: auto;'>
+            </div>
+        </section>";
 
-        // Extra-Curricular Activities
-        $output .= "<h2>Extra-Curricular Activities</h2><ul>";
-        foreach ($profile->getExtracurricularActivities() as $activity) {
-            $output .= "<li>" . $activity['role'] . " at " . $activity['organization'] . " (" . $activity['start_date'] . " to " . $activity['end_date'] . ")</li>";
-        }
-        $output .= "</ul>";
+        // Title section with background
+        $output .= "<section style='background-color: lightgray; padding: 30px;'>
+            <div style='text-align: center;'>
+                <h1 style='color: black;'>" . $profile->getTitle() . "</h1>
+            </div>
+        </section>";
 
-        // Languages
-        $output .= "<h2>Languages</h2><ul>";
-        foreach ($profile->getLanguages() as $language) {
-            $output .= "<li>" . $language['language'] . " (" . $language['proficiency'] . ")</li>";
+        // Profile content section
+        $output .= "<section style='padding: 20px;'>
+            <div style='max-width: 800px; margin: 0 auto;'>";
+        foreach ($profile->getParagraphs() as $paragraph) {
+            $output .= "<p style='line-height: 1.6;'>" . $paragraph . "</p>";
         }
-        $output .= "</ul>";
+        $output .= "</div></section>";
 
-        // References
-        $output .= "<h2>References</h2><ul>";
-        foreach ($profile->getReferences() as $reference) {
-            $output .= "<li>" . $reference['name'] . " - " . $reference['position'] . " at " . $reference['company'] . "<br>Email: " . $reference['email'] . "<br>Phone: " . $reference['phone_number'] . "</li>";
-        }
-        $output .= "</ul>";
+        // Close the HTML structure
+        $output .= "<script src='$jsPath'></script>
+        </body>
+        </html>";
 
         $this->response = $output;
     }
