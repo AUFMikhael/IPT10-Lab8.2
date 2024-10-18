@@ -4,76 +4,37 @@ namespace App;
 
 class Profile
 {
-    private $name;
-    private $contactInformation;
-    private $education;
-    private $skills = [];
-    private $experience = [];
-    private $certifications = [];
-    private $extracurricularActivities = [];
-    private $languages = [];
-    private $references = [];
+    private $title;  // Added title property
+    private $paragraphs = [];  // Store paragraphs
+    private $image;  // Property to store image data
 
     public function __construct($data = null)
     {
         // Map the data to the class properties
-        if (isset($data['personal_information'])) {
-            $info = $data['personal_information'];
+        if (isset($data['biography'])) {
+            $bio = $data['biography'];
+            $this->title = $bio['title']['t1'];  // Set title from the JSON
+            $this->paragraphs = $bio['paragraphs'];  // Store paragraphs directly
+        }
 
-            $this->name = $info['name'];
-            $this->contactInformation = $info['contact_information'];
-            $this->education = $info['education'];
-            $this->skills = $info['skills'];
-            $this->experience = $info['experience'];
-            $this->certifications = $info['certifications'];
-            $this->extracurricularActivities = $info['extracurricular_activities'];
-            $this->languages = $info['languages'];
-            $this->references = $info['references'];
+        // Map image data if it exists
+        if (isset($data['image'])) {
+            $this->image = $data['image'];
         }
     }
 
-    public function getFullName()
+    public function getTitle()
     {
-        return $this->name['first_name'] . ' ' . $this->name['middle_initial'] . '. ' . $this->name['last_name'];
+        return $this->title;  // Return the title
     }
 
-    public function getContactDetails()
+    public function getParagraphs()
     {
-        return $this->contactInformation;
+        return $this->paragraphs;  // Return the paragraphs
     }
 
-    public function getEducation()
+    public function getImage()
     {
-        return $this->education;
-    }
-
-    public function getSkills()
-    {
-        return $this->skills;
-    }
-
-    public function getExperience()
-    {
-        return $this->experience;
-    }
-
-    public function getCertifications()
-    {
-        return $this->certifications;
-    }
-
-    public function getExtracurricularActivities()
-    {
-        return $this->extracurricularActivities;
-    }
-
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
-
-    public function getReferences()
-    {
-        return $this->references;
+        return $this->image;  // Return the image data
     }
 }
